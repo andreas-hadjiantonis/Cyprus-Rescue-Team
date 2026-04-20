@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κυπριακή Ομάδα Διάσωσης · Cyprus Rescue Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --fire:        #C44B22;
+      --fire-dark:   #8C3315;
+      --fire-mid:    #E8673A;
+      --green:       #4A7C34;
+      --green-mid:   #6BA84A;
+      --green-light: #EBF4E5;
+      --ash-0:       #FFFFFF;
+      --ash-1:       #F7F5F2;
+      --ash-2:       #EEE9E3;
+      --ash-3:       #DDD8D0;
+      --text-1:      #1E1C19;
+      --text-2:      #5A5650;
+      --text-3:      #9A9590;
+      --border:      #DDD8D0;
+      --radius:      6px;
+      --radius-lg:   10px;
+      --max:         960px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--ash-1);
+      color: var(--text-1);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* TOP BAR */
+    .topbar {
+      background: var(--green);
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 7px 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left { display: flex; gap: 1.5rem; align-items: center; }
+    .topbar-left span { opacity: 0.8; }
+
+    /* NAV */
+    nav {
+      background: var(--ash-0);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+
+    .logo-wrap { cursor: pointer; position: relative; flex-shrink: 0; }
+
+    .logo-circle {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--fire);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 800;
+      color: white; letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .logo-wrap:hover .logo-circle { opacity: 0.8; }
+
+    .logo-img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; display: none; }
+
+    .logo-hint {
+      position: absolute; bottom: -22px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px; white-space: nowrap; color: var(--text-3);
+      background: var(--ash-0); padding: 2px 6px;
+      border-radius: 4px; border: 1px solid var(--border);
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .logo-wrap:hover .logo-hint { opacity: 1; }
+    .logo-upload-input { display: none; }
+
+    .brand-text { line-height: 1.2; }
+    .brand-name { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: var(--text-1); }
+    .brand-sub { font-size: 11px; font-weight: 500; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .nav-links { display: flex; gap: 0; list-style: none; height: 64px; }
+    .nav-links li { display: flex; align-items: center; }
+    .nav-links a {
+      display: flex; align-items: center; height: 100%; padding: 0 1rem;
+      font-size: 13px; font-weight: 500; color: var(--text-2);
+      border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-links a:hover { color: var(--fire); border-bottom-color: var(--fire); }
+
+    /* HERO */
+    .hero { background: var(--ash-0); border-bottom: 1px solid var(--border); padding: 5rem 2rem 4.5rem; }
+
+    .hero-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fire); margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1.5px; background: var(--fire); }
+
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 58px; font-weight: 800; line-height: 1.0;
+      color: var(--text-1); margin-bottom: 1.5rem; letter-spacing: -0.01em;
+    }
+    .hero h1 em { font-style: normal; color: var(--fire); }
+
+    .hero-desc { font-size: 15px; color: var(--text-2); line-height: 1.75; max-width: 420px; }
+    .hero-desc .en { display: block; margin-top: 0.75rem; font-size: 13px; color: var(--text-3); font-style: italic; }
+
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+    }
+
+    .stat-cell { background: var(--ash-0); padding: 1.5rem 1.25rem; text-align: center; }
+
+    .stat-cell.wide {
+      grid-column: span 2; background: var(--fire);
+      display: flex; align-items: center; gap: 1rem;
+      text-align: left; padding: 1.25rem 1.5rem;
+    }
+
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 40px; font-weight: 800; color: var(--text-1); line-height: 1; display: block;
+    }
+    .stat-num.counting { color: var(--fire); }
+    .stat-label { font-size: 12px; color: var(--text-3); margin-top: 4px; line-height: 1.4; }
+    .stat-cell.wide .stat-num { font-size: 16px; font-weight: 700; color: white; }
+    .stat-cell.wide .stat-label { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 2px; }
+
+    .wide-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(255,255,255,0.18); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* LAYOUT */
+    .divider { height: 1px; background: var(--border); }
+
+    .section { padding: 4rem 2rem; max-width: var(--max); margin: 0 auto; }
+    .section-head { margin-bottom: 2.5rem; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 800; color: var(--text-1); line-height: 1.08; }
+    .section-sub { margin-top: 0.6rem; font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 520px; }
+
+    /* GALLERY */
+    .gallery-bg { background: var(--ash-0); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .photo-slot {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--border); background: var(--ash-2);
+      aspect-ratio: 16/10; cursor: pointer; transition: border-color 0.2s;
+    }
+    .photo-slot:hover { border-color: var(--fire-mid); }
+    .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-slot img.hidden { display: none; }
+
+    .upload-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; padding: 1.5rem;
+    }
+    .upload-placeholder.hidden { display: none; }
+
+    .upload-icon-wrap {
+      width: 48px; height: 48px;
+      border: 1.5px dashed var(--ash-3); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .upload-label { font-size: 13px; font-weight: 500; color: var(--text-2); text-align: center; line-height: 1.4; }
+    .upload-label small { display: block; font-size: 11px; color: var(--text-3); font-weight: 400; margin-top: 2px; }
+
+    .upload-btn-sm {
+      background: var(--ash-0); color: var(--text-1);
+      border: 1px solid var(--border); padding: 6px 14px;
+      border-radius: var(--radius); font-size: 12px; font-weight: 500;
+      cursor: pointer; font-family: 'Barlow', sans-serif; margin-top: 4px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .upload-btn-sm:hover { border-color: var(--fire); color: var(--fire); }
+
+    .photo-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 10px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.45));
+      display: flex; justify-content: space-between; align-items: flex-end;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .photo-slot:hover .photo-overlay { opacity: 1; }
+    .photo-caption { font-size: 12px; font-weight: 500; color: white; }
+    .remove-btn {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+      color: white; font-size: 11px; padding: 3px 10px; border-radius: 4px;
+      cursor: pointer; font-family: 'Barlow', sans-serif; transition: background 0.15s;
+    }
+    .remove-btn:hover { background: rgba(180,40,20,0.6); }
+
+    /* ACTIVITIES */
+    .activities-bg { background: var(--ash-1); }
+
+    .activities-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+    }
+
+    .activity-cell { background: var(--ash-0); padding: 1.75rem 1.5rem; }
+
+    .activity-icon-wrap {
+      width: 40px; height: 40px; background: var(--ash-2);
+      border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .activity-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; line-height: 1.3; }
+    .activity-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+
+    /* MISSION STRIP */
+    .mission-strip { background: var(--text-1); padding: 3.5rem 2rem; }
+    .mission-inner { max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .mission-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fire-mid); margin-bottom: 0.75rem; }
+    .mission-title { font-family: 'Barlow Condensed', sans-serif; font-size: 38px; font-weight: 800; color: white; line-height: 1.05; margin-bottom: 1.25rem; }
+    .mission-body { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+    .values-list { display: flex; flex-direction: column; gap: 10px; }
+    .value-item {
+      display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+    }
+    .value-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fire-mid); flex-shrink: 0; margin-top: 6px; }
+    .value-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+    .value-text strong { color: white; font-weight: 600; display: block; margin-bottom: 2px; }
+
+    /* CONTACT */
+    .contact-bg { background: var(--ash-0); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 10px; }
+
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+      background: var(--ash-1); border: 1px solid var(--border); border-radius: var(--radius);
+    }
+
+    .contact-icon-wrap {
+      width: 34px; height: 34px; flex-shrink: 0;
+      background: var(--fire); border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .contact-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 3px; }
+    .contact-value { font-size: 14px; font-weight: 500; color: var(--text-1); line-height: 1.4; }
+    .contact-value small { display: block; font-size: 12px; font-weight: 400; color: var(--text-2); }
+
+    .volunteer-note {
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--green);
+      background: var(--green-light);
+      border-radius: 0 var(--radius) var(--radius) 0; margin-top: 4px;
+    }
+    .volunteer-note p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+    .volunteer-note strong { font-weight: 600; color: var(--text-1); }
+    .volunteer-note small { display: block; font-size: 12px; color: var(--text-3); margin-top: 4px; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 10px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%; padding: 11px 13px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      font-family: 'Barlow', sans-serif; font-size: 14px;
+      color: var(--text-1); background: var(--ash-1); resize: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form textarea { min-height: 110px; }
+    .contact-form input:focus,
+    .contact-form textarea:focus { outline: none; border-color: var(--fire); background: var(--ash-0); }
+
+    .btn-primary {
+      background: var(--fire); color: white;
+      padding: 11px 24px; border-radius: var(--radius);
+      font-size: 14px; font-weight: 600; border: none; cursor: pointer;
+      font-family: 'Barlow', sans-serif; align-self: flex-start; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--fire-dark); }
+
+    /* FOOTER */
+    footer { background: var(--ash-1); border-top: 1px solid var(--border); padding: 1.75rem 2rem; }
+    .footer-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--text-3);
+    }
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+    .footer-logo {
+      width: 26px; height: 26px; border-radius: 50%; background: var(--fire);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 9px; font-weight: 800; color: white;
+    }
+
+    /* SPONSORS */
+    .sponsors-bg { background: var(--ash-1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .sponsors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .sponsor-slot {
+      background: var(--ash-0);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      aspect-ratio: 3/2;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: border-color 0.2s;
+      position: relative; overflow: hidden;
+    }
+
+    .sponsor-slot:hover { border-color: var(--green); }
+    .sponsor-slot img { max-width: 80%; max-height: 70%; object-fit: contain; display: none; }
+    .sponsor-slot img.visible { display: block; }
+
+    .sponsor-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px;
+    }
+    .sponsor-placeholder.hidden { display: none; }
+
+    .sponsor-add-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px dashed var(--ash-3);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .sponsor-name-label {
+      font-size: 11px; color: var(--text-3); text-align: center;
+    }
+
+    .sponsor-remove {
+      position: absolute; top: 6px; right: 6px;
+      background: rgba(0,0,0,0.1); border: none; border-radius: 4px;
+      width: 20px; height: 20px; cursor: pointer;
+      display: none; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--text-2);
+    }
+
+    .sponsor-slot:hover .sponsor-remove.visible { display: flex; }
+
+    .become-sponsor {
+      background: var(--ash-0);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--green);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .sponsor-form { display: flex; flex-direction: column; gap: 10px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .become-sponsor { grid-template-columns: 1fr; gap: 1.5rem; }
+      .sponsors-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .topbar { display: none; }
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; padding: 3rem 0; gap: 2.5rem; }
+      .hero { padding: 0 1.5rem 3rem; }
+      .hero h1 { font-size: 42px; }
+      .section { padding: 2.5rem 1.5rem; }
+      .activities-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .mission-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .photo-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.25rem 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <strong>Κυπριακή Ομάδα Διάσωσης</strong>
+      <span>Κύπρος</span>
+    </div>
+    <div>Cyprus Rescue Team &nbsp;·&nbsp; Cyprus</div>
+  </div>
+
+  <nav>
+    <div class="nav-brand">
+      <div class="logo-wrap" onclick="document.getElementById('logo-input').click()" title="Ανέβασε logo">
+        <div class="logo-circle" id="logo-fallback">CRT</div>
+        <img class="logo-img" id="logo-img" src="" alt="Logo CRT">
+        <span class="logo-hint">Ανέβασε logo</span>
+        <input type="file" class="logo-upload-input" id="logo-input" accept="image/*" onchange="loadLogo(this)">
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">Κυπριακή Ομάδα Διάσωσης</div>
+        <div class="brand-sub">Cyprus Rescue Team</div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#fleet">Εξοπλισμός</a></li>
+      <li><a href="#activities">Δραστηριότητες</a></li>
+      <li><a href="#mission">Αποστολή</a></li>
+      <li><a href="#sponsors">Χορηγοί</a></li>
+      <li><a href="#contact">Επικοινωνία</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Εθελοντική Ομάδα · Volunteer Team</div>
+        <h1>Εκεί που<br>χρειάζεται<br><em>βοήθεια.</em></h1>
+        <p class="hero-desc">
+          Εθελοντική ομάδα διάσωσης και πυρόσβεσης που δραστηριοποιείται σε ολόκληρη την Κύπρο. Ανταποκρινόμαστε σε τοπικές επεμβάσεις και μεγάλες πυρκαγιές όπου χρειαστεί.
+          <span class="en">Volunteer rescue and firefighting team operating across Cyprus, responding to incidents wherever needed.</span>
+        </p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-cell">
+          <span class="stat-num counting" data-target="12">0</span>
+          <div class="stat-label">Χρόνια δράσης<br>Years active</div>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num" style="font-size:22px;line-height:1.3">Κύπρος</span>
+          <div class="stat-label">Κάλυψη<br>Coverage</div>
+        </div>
+        <div class="stat-cell wide">
+          <div class="wide-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <div class="stat-num">Εθελοντική δράση · Volunteer action</div>
+            <div class="stat-label">Μεγάλες πυρκαγιές σε ολόκληρη την Κύπρο · Major fires island-wide</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gallery-bg" id="fleet">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-label">Εξοπλισμός / Our Fleet</div>
+        <div class="section-title">Το όχημά μας.</div>
+        <div class="section-sub">Φωτογραφίες από τον εξοπλισμό και το πυροσβεστικό μας όχημα. · Photos of our equipment and fire engine.</div>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-slot">
+          <img src="car1.jpg" alt="Πυροσβεστικό όχημα">
+          <div class="photo-overlay" style="opacity:1;background:linear-gradient(transparent, rgba(0,0,0,0.35))">
+            <span class="photo-caption">Πυροσβεστικό Όχημα</span>
+          </div>
+        </div>
+        <div class="photo-slot">
+          <img src="heli1.jpg" alt="Εξοπλισμός">
+          <div class="photo-overlay" style="opacity:1;background:linear-gradient(transparent, rgba(0,0,0,0.35))">
+            <span class="photo-caption">Εξοπλισμός · Equipment</span>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="file-0" accept="image/*" onchange="loadPhoto(0, this)" style="display:none">
+      <input type="file" id="file-1" accept="image/*" onchange="loadPhoto(1, this)" style="display:none">
+    </div>
+  </div>
+
+  <div class="activities-bg" id="activities">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-label">Δραστηριότητες / Activities</div>
+        <div class="section-title">Τι κάνουμε.</div>
+        <div class="section-sub">Από τοπικές επεμβάσεις ως μεγάλες πυρκαγιές και εκπαιδεύσεις. · From local response to large-scale wildfire operations and training.</div>
+      </div>
+      <div class="activities-grid">
+        <div class="activity-cell">
+          <div class="activity-icon-wrap" style="background:var(--green-light)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A7C34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2c0 0-5 5-5 9.5a5 5 0 0 0 10 0C17 7 12 2 12 2z"/>
+              <path d="M12 9c0 0-2 2-2 3.5a2 2 0 0 0 4 0C14 11 12 9 12 9z"/>
+            </svg>
+          </div>
+          <div class="activity-title">Καταστολή Πυρκαγιών<br><span style="font-weight:400;color:var(--text-3);font-size:12px">Firefighting</span></div>
+          <div class="activity-desc">Επεμβάσεις σε αστικές και δασικές πυρκαγιές σε ολόκληρη την Κύπρο.</div>
+        </div>
+        <div class="activity-cell">
+          <div class="activity-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C44B22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+          </div>
+          <div class="activity-title">Εκπαίδευση<br><span style="font-weight:400;color:var(--text-3);font-size:12px">Training</span></div>
+          <div class="activity-desc">Τακτικές ασκήσεις, πρώτες βοήθειες και εξειδικευμένη κατάρτιση.</div>
+        </div>
+        <div class="activity-cell">
+          <div class="activity-icon-wrap" style="background:var(--green-light)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A7C34" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="activity-title">Πρόληψη<br><span style="font-weight:400;color:var(--text-3);font-size:12px">Prevention</span></div>
+          <div class="activity-desc">Ενημερωτικές εκστρατείες και έλεγχος επικίνδυνων περιοχών.</div>
+        </div>
+        <div class="activity-cell">
+          <div class="activity-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C44B22" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              <path d="M21 21v-2a4 4 0 0 0-3-3.85"/>
+            </svg>
+          </div>
+          <div class="activity-title">Συνεργασίες<br><span style="font-weight:400;color:var(--text-3);font-size:12px">Partnerships</span></div>
+          <div class="activity-desc">Συντονισμός με Πυροσβεστική Υπηρεσία και άλλες εθελοντικές ομάδες.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mission-strip" id="mission">
+    <div style="max-width:var(--max);margin:0 auto;padding:0 2rem;">
+      <div class="mission-label" style="margin-bottom:0.6rem">Συνεισφορά μας / Our Contribution</div>
+      <div class="mission-title" style="margin-bottom:0.5rem">Εκεί που χρειάστηκε.</div>
+      <p class="mission-body" style="max-width:560px;margin-bottom:2.5rem">
+        Η ομάδα μας συμμετείχε σε επεμβάσεις σε μερικές από τις μεγαλύτερες πυρκαγιές που έπληξαν την Κύπρο. Παρακάτω είναι μερικές από τις σημαντικότερες.
+        <span style="display:block;font-size:12px;opacity:0.45;margin-top:6px">Our team has participated in some of the most significant wildfires in Cyprus's history.</span>
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);overflow:hidden;">
+        <div style="background:rgba(255,255,255,0.04);padding:1.5rem;border-top:3px solid #5A8A3C;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#7DB85A;margin-bottom:0.5rem">Κοιλάδα Σολέας · 2016</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:white;line-height:1;margin-bottom:0.5rem">18.6 km²</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6">Πυρκαγιά στην Ευρύχου που κατέκαψε 1.860 εκτάρια δάσους στο Τρόοδος.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);padding:1.5rem;border-top:3px solid var(--fire);">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire-mid);margin-bottom:0.5rem">Αρακαπάς · 2021</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:white;line-height:1;margin-bottom:0.5rem">55 km²</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6">Η χειρότερη πυρκαγιά στη σύγχρονη ιστορία της Κυπριακής Δημοκρατίας, με τέσσερις νεκρούς.</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);padding:1.5rem;border-top:3px solid var(--fire);">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--fire-mid);margin-bottom:0.5rem">Λεμεσός · 2025</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:white;line-height:1;margin-bottom:0.5rem">120 km²</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6">Η μεγαλύτερη πυρκαγιά στις ελεύθερες περιοχές μετά το 1974, πέρασε από 15 χωριά με δύο νεκρούς.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sponsors-bg" id="sponsors">
+    <div class="section">
+      <div class="section-head">
+        <div class="section-label">Χορηγοί / Sponsors</div>
+        <div class="section-title">Στηρίζουν την αποστολή μας.</div>
+        <div class="section-sub">Οι χορηγοί μας συμβάλλουν στην εξασφάλιση εξοπλισμού και εκπαίδευσης για την ομάδα. · Our sponsors help fund equipment and training for the team.</div>
+      </div>
+
+      <div class="sponsors-grid" id="sponsors-grid">
+        <div class="sponsor-slot" onclick="triggerSponsorUpload(0)">
+          <img id="sponsor-img-0" src="" alt="Sponsor 1">
+          <div class="sponsor-placeholder" id="sponsor-ph-0">
+            <div class="sponsor-add-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9590" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="sponsor-name-label">Χορηγός 1</div>
+          </div>
+          <button class="sponsor-remove" id="sponsor-rm-0" onclick="removeSponsor(0,event)">✕</button>
+        </div>
+        <div class="sponsor-slot" onclick="triggerSponsorUpload(1)">
+          <img id="sponsor-img-1" src="" alt="Sponsor 2">
+          <div class="sponsor-placeholder" id="sponsor-ph-1">
+            <div class="sponsor-add-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9590" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="sponsor-name-label">Χορηγός 2</div>
+          </div>
+          <button class="sponsor-remove" id="sponsor-rm-1" onclick="removeSponsor(1,event)">✕</button>
+        </div>
+        <div class="sponsor-slot" onclick="triggerSponsorUpload(2)">
+          <img id="sponsor-img-2" src="" alt="Sponsor 3">
+          <div class="sponsor-placeholder" id="sponsor-ph-2">
+            <div class="sponsor-add-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9590" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="sponsor-name-label">Χορηγός 3</div>
+          </div>
+          <button class="sponsor-remove" id="sponsor-rm-2" onclick="removeSponsor(2,event)">✕</button>
+        </div>
+        <div class="sponsor-slot" onclick="triggerSponsorUpload(3)">
+          <img id="sponsor-img-3" src="" alt="Sponsor 4">
+          <div class="sponsor-placeholder" id="sponsor-ph-3">
+            <div class="sponsor-add-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9590" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="sponsor-name-label">Χορηγός 4</div>
+          </div>
+          <button class="sponsor-remove" id="sponsor-rm-3" onclick="removeSponsor(3,event)">✕</button>
+        </div>
+        <div class="sponsor-slot" onclick="triggerSponsorUpload(4)">
+          <img id="sponsor-img-4" src="" alt="Sponsor 5">
+          <div class="sponsor-placeholder" id="sponsor-ph-4">
+            <div class="sponsor-add-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A9590" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <div class="sponsor-name-label">Χορηγός 5</div>
+          </div>
+          <button class="sponsor-remove" id="sponsor-rm-4" onclick="removeSponsor(4,event)">✕</button>
+        </div>
+      </div>
+      <input type="file" id="sponsor-file-0" accept="image/*" onchange="loadSponsor(0,this)" style="display:none">
+      <input type="file" id="sponsor-file-1" accept="image/*" onchange="loadSponsor(1,this)" style="display:none">
+      <input type="file" id="sponsor-file-2" accept="image/*" onchange="loadSponsor(2,this)" style="display:none">
+      <input type="file" id="sponsor-file-3" accept="image/*" onchange="loadSponsor(3,this)" style="display:none">
+      <input type="file" id="sponsor-file-4" accept="image/*" onchange="loadSponsor(4,this)" style="display:none">
+
+      <div class="become-sponsor">
+        <div>
+          <div class="section-label" style="margin-bottom:0.5rem">Γίνετε χορηγός / Become a sponsor</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--text-1);line-height:1.1;margin-bottom:0.75rem">Στηρίξτε<br>την ομάδα.</div>
+          <p style="font-size:13px;color:var(--text-2);line-height:1.7;max-width:280px">Η χορηγία σας βοηθά στην απόκτηση εξοπλισμού, εκπαίδευσης και υποδομών που κάνουν τη διαφορά σε κάθε επέμβαση.<br><br><span style="font-size:12px;color:var(--text-3)">Your sponsorship helps fund equipment, training and infrastructure that make a difference in every operation.</span></p>
+        </div>
+        <div class="sponsor-form">
+          <div class="form-row">
+            <input type="text" placeholder="Εταιρεία / Company">
+            <input type="text" placeholder="Όνομα / Name">
+          </div>
+          <input type="email" placeholder="Email">
+          <input type="tel" placeholder="Τηλέφωνο / Phone (προαιρετικό)">
+          <textarea style="min-height:80px;width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Barlow',sans-serif;font-size:14px;color:var(--text-1);background:var(--ash-1);resize:none;" placeholder="Μήνυμα / Message (προαιρετικό)"></textarea>
+          <button class="btn-primary" style="background:var(--green);align-self:flex-start">Αποστολή ενδιαφέροντος / Express interest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="section">
+      <div class="section-head">
+        <div class="section-label">Επικοινωνία / Contact</div>
+        <div class="section-title">Επικοινωνήστε μαζί μας.</div>
+        <div class="section-sub">Για ερωτήσεις, πληροφορίες ή συνεργασίες. · For enquiries, information or partnerships.</div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Τοποθεσία / Location</div>
+              <div class="contact-value">Κύπρος<small>Cyprus</small></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.29 2 2 0 0 1 3.55 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 6.29 6.29l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Τηλέφωνο / Phone</div>
+              <div class="contact-value">+357 22 000 000</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon-wrap">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">info@crt.com.cy</div>
+            </div>
+          </div>
+          <div class="volunteer-note">
+            <p>
+              <strong>Εθελοντισμός · Volunteering</strong>
+              Αν επιθυμείτε να συμμετέχετε στην ομάδα, επικοινωνήστε μαζί μας μέσω email. Η ένταξη νέων μελών γίνεται κατόπιν αξιολόγησης.
+              <small>If you wish to join the team, contact us by email. New members are accepted following evaluation.</small>
+            </p>
+          </div>
+        </div>
+        <div class="contact-form">
+          <div class="form-row">
+            <input type="text" placeholder="Όνομα / Name">
+            <input type="email" placeholder="Email">
+          </div>
+          <input type="text" placeholder="Θέμα / Subject">
+          <textarea placeholder="Μήνυμα / Message"></textarea>
+          <button class="btn-primary" style="background:var(--green)">Αποστολή / Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo" id="footer-logo">CRT</div>
+        <span>© 2026 Κυπριακή Ομάδα Διάσωσης</span>
+      </div>
+      <span>Κύπρος · Cyprus</span>
+    </div>
+  </footer>
+
+  <script>
+    function loadLogo(input) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const src = e.target.result;
+        document.getElementById('logo-img').src = src;
+        document.getElementById('logo-img').style.display = 'block';
+        document.getElementById('logo-fallback').style.display = 'none';
+        const fl = document.getElementById('footer-logo');
+        fl.innerHTML = '';
+        fl.style.cssText = 'width:26px;height:26px;border-radius:50%;overflow:hidden;background:none;';
+        const fimg = document.createElement('img');
+        fimg.src = src;
+        fimg.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+        fl.appendChild(fimg);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+
+    function triggerUpload(idx) { document.getElementById('file-' + idx).click(); }
+
+    function loadPhoto(idx, input) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('img-' + idx).src = e.target.result;
+        document.getElementById('img-' + idx).classList.remove('hidden');
+        document.getElementById('placeholder-' + idx).classList.add('hidden');
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+
+    function removePhoto(idx) {
+      document.getElementById('img-' + idx).src = '';
+      document.getElementById('img-' + idx).classList.add('hidden');
+      document.getElementById('placeholder-' + idx).classList.remove('hidden');
+      document.getElementById('file-' + idx).value = '';
+    }
+
+    function triggerSponsorUpload(idx) { document.getElementById('sponsor-file-' + idx).click(); }
+
+    function loadSponsor(idx, input) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('sponsor-img-' + idx);
+        const ph = document.getElementById('sponsor-ph-' + idx);
+        const rm = document.getElementById('sponsor-rm-' + idx);
+        img.src = e.target.result;
+        img.classList.add('visible');
+        ph.classList.add('hidden');
+        rm.classList.add('visible');
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+
+    function removeSponsor(idx, e) {
+      e.stopPropagation();
+      const img = document.getElementById('sponsor-img-' + idx);
+      const ph = document.getElementById('sponsor-ph-' + idx);
+      const rm = document.getElementById('sponsor-rm-' + idx);
+      img.src = ''; img.classList.remove('visible');
+      ph.classList.remove('hidden');
+      rm.classList.remove('visible');
+      document.getElementById('sponsor-file-' + idx).value = '';
+    }
+
+
+    function animateCounters() {
+      document.querySelectorAll('.stat-num.counting').forEach(function(el) {
+        const target = parseInt(el.dataset.target, 10);
+        const duration = 1400;
+        const step = 16;
+        const increment = target / (duration / step);
+        let current = 0;
+        const timer = setInterval(function() {
+          current += increment;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = Math.floor(current) + '+';
+        }, step);
+      });
+    }
+
+    const observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { animateCounters(); observer.disconnect(); }
+    }, { threshold: 0.3 });
+
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) observer.observe(heroStats);
+  </script>
+
+</body>
+</html>
